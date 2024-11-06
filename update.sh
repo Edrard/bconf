@@ -19,6 +19,6 @@ yes | composer install --no-dev
 export COMPOSER_ALLOW_SUPERUSER=0
 
 echo -e "${db}" > db.json
-echo -e "${config}"" > config.php
+echo -e "${config}" > config.php
 
 chown ${user}:${group} * -R
