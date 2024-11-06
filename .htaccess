@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /
+
+# Protect the htaccess file
+<Files .htaccess>
+	Require all denied
+</Files>
+
+# Protect log.txt
+<Files db.json>
+	Require all denied
+</Files>
+
+# Disable directory browsing
+Options All -Indexes
