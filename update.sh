@@ -18,7 +18,7 @@ composer self-update --2
 yes | composer install --no-dev
 export COMPOSER_ALLOW_SUPERUSER=0
 
-echo $db > db.json
-echo $config > config.php
+echo -e $db > db.json
+echo -e $config > config.php
 
 chown ${user}:${group} * -R
