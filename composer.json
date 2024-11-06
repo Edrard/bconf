@@ -1,0 +1,36 @@
+{
+    "name": "edrard/bconf",
+    "description": "Backup config files",
+    "type": "app",
+    "license": "GNUv3",
+    "keywords": ["config","backup","vamark","linux","network","cisco","mikrotik"],
+    "authors": [{
+        "name": "Edrard",
+        "email": "demonand@gmail.com"
+    }],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/Edrard/function.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/Edrard/MyLog.git"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "edrard/function": "dev-master",
+        "edrard/mylog": "dev-master",
+        "php-di/php-di": "^6.4",
+        "nesbot/carbon": "^2.55",
+        "phpseclib/phpseclib": "^3.0",
+        "symfony/filesystem": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "edrard\\Bconf\\": "src/Bconf",
+            "edrard\\Exc\\": "src/Exc"
+        }
+    }
+}

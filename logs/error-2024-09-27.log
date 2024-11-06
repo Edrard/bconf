@@ -1,0 +1,8 @@
+[2024-09-27 16:59:44] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:02:46] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:02:51] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:04:48] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:05:06] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:05:14] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:05:19] log.ERROR: [edrard\Exc\BaseException] Syntax error, malformed JSON. [] []
+[2024-09-27 17:06:22] log.ERROR: [edrard\Exc\JsonErrorException] Syntax error, malformed JSON. [] []
