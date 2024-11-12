@@ -24,7 +24,7 @@ class Json implements IntDbDriver
         $current_stat_used = 0;
         $return = [];
         foreach($this->data as $key => $val){
-            MyLog::info("[".get_class($this)."] Getting devices configs",[]);
+            MyLog::info("[".get_class($this)."] Getting devices config ".$key,[]);
             if($this->groups === [] or in_array($val['group'],$this->groups)){
                 $return[$key] = $val;
                 $current_stat_used++;

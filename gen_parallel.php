@@ -14,9 +14,6 @@ use edrard\MyLogMail\LogInitiation;
 
 $container = include 'bootstrap.php';
 
-$container->set('group', []);
-$container->set('log_folder', "");
-
 $path = pathinfo(__FILE__);
 
 try{
@@ -31,3 +28,4 @@ try{
     MyLog::critical($e->getMessage(),[]);
     die($e->getMessage());
 }
+MyLog::info("Ended in - ".Timer::getTime());
