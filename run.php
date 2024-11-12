@@ -15,10 +15,18 @@ use edrard\MyLogMail\LogInitiation;
 $container = include 'bootstrap.php';
 Timer::startTime();
 
+$container->set('group', isset($argv[1])? explode(',',$argv[1]) : []);
+$container->set('log_folder', isset($argv[2]) && $argv[2] ? $argv[2] : "");
+if(isset($argv[2]) && $argv[2]){
+    $logs = $container->get('logs');
+    $logs['file']['dst'] = rtrim($logs['file']['dst'],'/').'/'.$argv[2];
+    $container->set('logs', $logs);
+}
 
 new LogInitiation($container->get('logs'));
 
-$container->set('group', isset($argv[1])? explode(',',$argv[1]) : "");
+
+
 
 try{
     $starter = $container->make('Starter');
