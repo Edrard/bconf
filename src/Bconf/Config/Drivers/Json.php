@@ -12,7 +12,7 @@ class Json implements IntDbDriver
     protected $data;
     protected $tmp;
     function __construct(array $db, string $groups){
-        $this->groups = $groups ? explode(',',$groups) : $groups;
+        $this->groups = $groups;
         $this->db = $db;
         try{
             $this->readDb();
@@ -24,6 +24,7 @@ class Json implements IntDbDriver
         $current_stat_used = 0;
         $return = [];
         foreach($this->data as $key => $val){
+            MyLog::info("[".get_class($this)."] Getting devices configs",[]);
             if(!is_array($this->groups) or in_array($val['group'],$this->groups)){
                 $return[$key] = $val;
                 $current_stat_used++;
@@ -38,9 +39,11 @@ class Json implements IntDbDriver
     }
     protected function readDb(){
         $data = file_get_contents($this->db['path']);
+        MyLog::info("[".get_class($this)."] Reading Db",[]);
         $this->data = json_validate($data,true);
         if(!is_array($this->data)){
             throw new JsonErrorException($this->data,'error');
         }
+        MyLog::info("[".get_class($this)."] DB data is fine",[]);
     }
 }

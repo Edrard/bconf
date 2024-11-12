@@ -10,16 +10,21 @@ if (! function_exists('xdiff_string_diff')) {
 use Carbon\Carbon;
 use edrard\Log\MyLog;
 use edrard\Log\Timer;
+use edrard\MyLogMail\LogInitiation;
 
 $container = include 'bootstrap.php';
+Timer::startTime();
 
-MyLog::init();
 
-$container->set('group', isset($argv[1])? $argv[1] : "");
+new LogInitiation($container->get('logs'));
+
+$container->set('group', isset($argv[1])? explode(',',$argv[1]) : "");
 
 try{
     $starter = $container->make('Starter');
     $starter->getDevices();
 }Catch (\Exception $e) {
+    MyLog::critical($e->getMessage(),[]);
     die($e->getMessage());
 }
+MyLog::info("Ended in - ".Timer::getTime());

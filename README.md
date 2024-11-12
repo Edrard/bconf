@@ -1,4 +1,5 @@
 
+
 ## Preview
 
 Bconf it is a simple device configuration backup software package. You can run it on any Linux system; you’ll just need PHP and a few additional packages. I started developing this product as an alternative to well-known projects, with the main goals being speed, compactness, and flexibility.
@@ -65,7 +66,7 @@ bash update.sh
 ```
 ## Configuration
 
-The configuration should begin with the _config.php_ file. There are two parameters: _db_ and _save_. In the _db_ section, you can configure the database type where the connection settings for your devices are stored; currently, only _json_ is available, along with the path to the _json_ file. The second parameter, _save_, allows you to specify the path where the dumps of your device configuration files should be saved.
+The configuration should begin with the _config.php_ file. There are two parameters: _**db**_ and **_save_**. In the **_db_** section, you can configure the database type where the connection settings for your devices are stored; currently, only _json_ is available, along with the path to the _json_ file. The second parameter, **_save_**, allows you to specify the path where the dumps of your device configuration files should be saved.
 
 ### Db
 
@@ -92,7 +93,7 @@ Now, let's take a look at the _db.json_ file (by the way, you can rename it to a
     "test-router02":{
         "ip":"0.0.0.0",
         "port":22,
-        "login":"admin+ct",
+        "login":"admin+cte",
         "password":"password",
         "group":"Vamark",
         "type":"router",
@@ -119,7 +120,7 @@ Another crucial parameter is **search**, which is the shell prompt the system ex
 
 ### Attention
 
-For Mikrotik devices, add **+ct** to the username in the _login_ parameter, as shown in the example.
+For Mikrotik devices, add **+cte** to the username in the _login_ parameter, as shown in the example.
 
 ### Model
 The model description files are located in the **src\Bconf\Config\Devices** folder. You can create your own files for other devices following the same format.
@@ -134,6 +135,7 @@ return [
     "enablePTY" => False,
     "timeout" => 30,
     "command_end" => "\n"
+    "config_filtets" => ''
 ];
 ```
 Here, we have three arrays of parameters:
@@ -146,6 +148,7 @@ Here, we have three arrays of parameters:
 **enablePTY**: Indicates whether to enable PTY or not.
 **timeout**: The timeout for executing the commands.
 **command_end**: The command input character.
+**config_filtets**: Leave empty, if you wish to apply all filters to dump
 
 ## Run
 

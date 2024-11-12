@@ -20,6 +20,7 @@ class Starter
         $this->connector = $con;
     }
     public function getDevices(){
+        MyLog::info("[".get_class($this)."] Starting dumping process",[]);
         $driver = $this->config->getDriver();
         $devices = $driver->getDevices();
         foreach($devices as $devs ){
@@ -32,6 +33,7 @@ class Starter
             $con = ucfirst($dev['connect']);
             $con_class = "edrard\\Bconf\\Connector\\$con";
             $device_config = $this->config->getDevicesConfigs();
+            MyLog::info("[".get_class($this)."] Dumping device ".$dev['name'],$dev);
             if(!isset($device_config[$dev['model']])){
                 throw new NoDeviceConfigException("Cant find device config for ".$dev['model'],'error');
             }

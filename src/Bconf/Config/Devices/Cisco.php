@@ -7,5 +7,6 @@ return [
     "exec_type" => "write",
     "enablePTY" => False,
     "timeout" => 30,
-    "command_end" => "\n"
+    "command_end" => "\n",
+    "config_filtets" => []
 ];
