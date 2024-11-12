@@ -27,7 +27,7 @@ class Ssh implements IntConnector
     public function login(){
         MyLog::debug("[".get_class($this)."] Login to ".$this->config['ip'],);
         if (!$this->driver->login($this->config['login'], $this->config['password'])) {
-            throw new LoginException('Login failed');
+            throw new LoginException('Login failed for ip '.$this->config['ip']);
         }
         MyLog::debug("[".get_class($this)."] Log in complete ",);
     }
