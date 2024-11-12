@@ -9,13 +9,13 @@ return array(
         'path' => 'Dumps',
     ],
     'disable' => [
-        'dumping' => 1 #Disable Dumping for testing
+        'dumping' => 0 #Disable Dumping for testing
     ],
     'logs' => [
         'file' => [
             'dst' => 'logs',
             'full' => 1, # keep info
-            'debug' => 1, # More priority then full, adding debug to logs
+            'debug' => 0, # More priority then full, adding debug to logs
             'per_run' => 0 # Create new log per script run
         ],
         'mail' => [
@@ -25,7 +25,7 @@ return array(
             'port' => '25',
             'from' => '',
             'to' => '',
-            'separate' => '1',
+            'separate' => '0',
             'subject' => 'My Server'
         ]
     ]
