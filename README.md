@@ -1,5 +1,6 @@
 
 
+
 ## Preview
 
 Bconf it is a simple device configuration backup software package. You can run it on any Linux system; you’ll just need PHP and a few additional packages. I started developing this product as an alternative to well-known projects, with the main goals being speed, compactness, and flexibility.
@@ -66,7 +67,44 @@ bash update.sh
 ```
 ## Configuration
 
+```php
+return array(
+    'db' => [
+        'type' => 'json',
+        'path' => 'db.json'
+    ],
+    'save' => [
+        'path' => 'Dumps',
+    ],
+    'disable' => [
+        'dumping' => 1 #Disable Dumping for testing
+    ],
+    'logs' => [
+        'file' => [
+            'dst' => 'logs',
+            'full' => 1, # keep info
+            'debug' => 1, # More priority then full, adding debug to logs
+            'per_run' => 0 # Create new log per script run
+        ],
+        'mail' => [
+            'user' => '',
+            'pass' => '',
+            'smtp' => '',
+            'port' => '25',
+            'from' => '',
+            'to' => '',
+            'separate' => '1',
+            'subject' => 'My Server'
+        ]
+    ]
+);
+```
+
 The configuration should begin with the _config.php_ file. There are two parameters: _**db**_ and **_save_**. In the **_db_** section, you can configure the database type where the connection settings for your devices are stored; currently, only _json_ is available, along with the path to the _json_ file. The second parameter, **_save_**, allows you to specify the path where the dumps of your device configuration files should be saved.
+
+The **_disable_** section includes the **_dump_** parameter. If it is set to 1, the configuration collection system is disabled for testing purposes.
+
+The **_logs_** section allows us to configure log email notifications. The **_separate_** parameter indicates that logs should be sent separately. In the **_file_** settings, you can specify the folder where logs will be stored and set their level: **_full_** if you want to receive informational logs, or **_debug_**, which automatically includes full logs and debug logs. **_per_run_** creates a new log with each run
 
 ### Db
 
@@ -135,7 +173,7 @@ return [
     "enablePTY" => False,
     "timeout" => 30,
     "command_end" => "\n"
-    "config_filtets" => ''
+    "config_filtets" => []
 ];
 ```
 Here, we have three arrays of parameters:
