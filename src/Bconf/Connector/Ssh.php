@@ -25,52 +25,68 @@ class Ssh implements IntConnector
         return $config;
     }
     public function login(){
+        MyLog::debug("[".get_class($this)."] Login to ".$this->config['ip'],);
         if (!$this->driver->login($this->config['login'], $this->config['password'])) {
             throw new LoginException('Login failed');
         }
+        MyLog::debug("[".get_class($this)."] Log in complete ",);
     }
     public function connect(){
-        $this->driver->read('');
+        $con = $this->driver->read('');
+        MyLog::debug("[".get_class($this)."] Connect ",[$con]);
     }
     public function setTimeouts(){
         if($this->device_config['timeout']){
             $this->driver->setTimeout($this->device_config['timeout']);
+            MyLog::debug("[".get_class($this)."] Setting timeout ",[$this->device_config['timeout']]);
         }
     }
     public function enablePTY(){
         if($this->device_config['enablePTY'] == 1){
             $this->driver->enablePTY();
+            MyLog::debug("[".get_class($this)."] PTY enabled ",[]);
         }
     }
     public function enable(){
         if($this->config['config']['enable'] == 1){
+            MyLog::debug("[".get_class($this)."] Starting enable ",[]);
             $this->driver->write($this->config['config']['enable_command'].$this->device_config['command_end']);
-            $this->driver->read($this->config['config']['enable_pass_str']); // Чекаємо запит на пароль для enable режиму
+            $read = $this->driver->read($this->config['config']['enable_pass_str']); // Чекаємо запит на пароль для enable режиму
+            MyLog::debug("[".get_class($this)."] Read ",[$read]);
             $this->driver->write($this->config['config']['enable_pass'].$this->device_config['command_end']); // Введи свій пароль для режиму enable
-            $this->driver->read($this->config['config']['search']);
+            $read = $this->driver->read($this->config['config']['search']);
+            MyLog::debug("[".get_class($this)."] Read ",[$read]);
         }
     }
     public function runPreCommand(){
+        MyLog::debug("[".get_class($this)."] Run pre command ",[]);
         foreach($this->device_config['pre_command'] as $command){
             if($command){
                 $this->driver->write($command.$this->device_config['command_end']);
-                $this->driver->read($this->config['config']['search']);
+                $read = $this->driver->read($this->config['config']['search']);
+                MyLog::debug("[".get_class($this)."] Read ",[$read]);
             }
         }
     }
     public function runAfterCommand(){
+        MyLog::debug("[".get_class($this)."] Run after command ",[]);
         foreach($this->device_config['after_command'] as $command){
             if($command){
                 $this->driver->write($command.$this->device_config['command_end']);
-                $this->driver->read($this->config['config']['search']);
+                $read = $this->driver->read($this->config['config']['search']);
+                MyLog::debug("[".get_class($this)."] Read ",[$read]);
             }
         }
     }
     public function configExport(){
-        return $this->{$this->device_config['exec_type']}();
+        MyLog::debug("[".get_class($this)."] Run export ",[]);
+        $read = $this->{$this->device_config['exec_type']}();
+        MyLog::debug("[".get_class($this)."] Read ",[$read]);
+        return $read;
     }
     private function exec(){
         $output = '';
+        MyLog::debug("[".get_class($this)."] Exec type run ",[]);
         foreach($this->device_config['config_export'] as $command){
             if($command){
                 $this->driver->exec($command.$this->device_config['command_end']);
@@ -81,6 +97,7 @@ class Ssh implements IntConnector
     }
     private function write(){
         $output = '';
+        MyLog::debug("[".get_class($this)."] Write type run ",[]);
         foreach($this->device_config['config_export'] as $command){
             if($command){
                 $this->driver->write($command.$this->device_config['command_end']);

@@ -27,6 +27,10 @@ class Starter
             $this->runBackup($devs);
         }
     }
+    public function getGroups(){
+        $driver = $this->config->getDriver();
+        return $driver->getGroups();
+    }
     private function runBackup($devs){
         foreach($devs as $name => $dev){
             $dev['name'] = $name;
