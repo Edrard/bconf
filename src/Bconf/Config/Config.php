@@ -13,9 +13,10 @@ class Config
     protected $save;
     protected $groups;
     protected $devices;
+    protected $log_folder;
     protected $dev_conf = ['pre_command' => [''],'after_command' => [''],'command_end' => "\n","exec_type" => "write","enablePTY" => TRUE,"timeout" => 15,"command_end" => "", "config_filtets" => []];
 
-    function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable){
+    function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder){
         $this->config = $config;
         MyLog::info("[".get_class($this)."] Db config",$this->config);
         $this->save = $save;
@@ -27,6 +28,8 @@ class Config
             MyLog::warning("[".get_class($this)."] Dumping was disabled",[]);
         }
         $this->groups = $groups;
+        $this->log_folder = $log_folder;
+        $this->logFolderStatus();
         $this->logGroupsStatus();
         $this->config['time'] = Carbon::now();
         $this->loadDeviceConfig();
@@ -41,8 +44,15 @@ class Config
     public function getConfig(){
         return $this->config;
     }
+    private function logFolderStatus(){
+        if(!$this->log_folder){
+            MyLog::info("[".get_class($this)."] Not changing log folder",[]);
+        }else{
+            MyLog::info("[".get_class($this)."] Changing log folder",$this->log_folder);
+        }
+    }
     private function logGroupsStatus(){
-        if(!$this->groups){
+        if($this->groups === []){
             MyLog::info("[".get_class($this)."] Going to dump all groups",[]);
         }else{
             MyLog::info("[".get_class($this)."] Going to Dump next groups",$this->groups);
