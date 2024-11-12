@@ -205,6 +205,8 @@ php run.php Client,Vamark
 ```
 For automatic collection, simply create a cron job to run these commands.
 
+You can also initiate parallel collection for all groups using _**gen_parallel.php**_. All you need is permission to use the **_exec_** function.
+
 ## License
 
 This code base for this repository's code is distributed under GNUv3 License. See `LICENSE.txt` for more information.
