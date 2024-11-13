@@ -9,7 +9,7 @@ git_version=$(git ls-remote https://github.com/Edrard/bconf.git HEAD | cut -f1)
 local_version=$(git rev-parse HEAD)
 if [[ ${local_version} != ${git_version} ]]; then
     git fetch --all
-    git reset --hard origin/master
+    git reset --hard origin/main
     git pull
 fi
 
