@@ -26,6 +26,7 @@ return array(
             'from' => '',
             'to' => '',
             'separate' => '0',
+            'only_important' => 1,
             'subject' => 'My Server'
         ]
     ]
