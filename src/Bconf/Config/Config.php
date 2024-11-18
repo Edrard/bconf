@@ -53,6 +53,9 @@ class Config
         $this->config['main']['retries'] = (int) $this->config['main']['retries'];
         $this->config['main']['retries_timeout'] = (int) $this->config['main']['retries_timeout'];
         MyLog::info("[".get_class($this)."] Retries config",$this->config['main']);
+        if($this->config['main']['retries'] * $this->config['main']['retries_timeout'] > 86400){
+            MyLog::info("[".get_class($this)."] You retries interval more then 1 day",$this->config['main']);
+        }
     }
     private function logFolderStatus(){
         if(!$this->log_folder){
