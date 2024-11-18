@@ -22,3 +22,5 @@ echo -e "${db}" > db.json
 echo -e "${config}" > config.php
 
 chown ${user}:${group} * -R
+chmod 777 test_json.sh
+chmod 777 update.sh
