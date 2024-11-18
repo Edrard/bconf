@@ -27,6 +27,8 @@ class Config
         if($this->config['disable']['dumping'] == 1){
             MyLog::warning("[".get_class($this)."] Dumping was disabled",[]);
         }
+        $this->config['main']['retries_timeout'] = 1800;
+        $this->config['main']['retries'] = 10;
         $this->config['main'] = $main;
         $this->retriesCheck();
         MyLog::info("[".get_class($this)."] Main config",$main);
