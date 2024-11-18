@@ -14,10 +14,13 @@ class Starter
     protected $config;
     protected $groups;
     protected $connector;
+    protected $cmain;
+    protected $retries = [];
 
     function __construct(Config $config,Connector $con){
         $this->config = $config;
         $this->connector = $con;
+        $this->cmain = $this->config->getConfig()['main'];
     }
     public function getDevices(){
         MyLog::info("[".get_class($this)."] Starting dumping process",[]);
@@ -26,10 +29,34 @@ class Starter
         foreach($devices as $devs ){
             $this->runBackup($devs);
         }
+        $this->retries();
     }
     public function getGroups(){
         $driver = $this->config->getDriver();
         return $driver->getGroups();
+    }
+    private function retries(){
+        if($this->cmain['retries'] != [] && $this->cmain['retries'] > 0){
+            MyLog::warning("[".get_class($this)."] Not all dumped. Retries ".$this->cmain['retries'].". Need to dump ",$this->retries);
+            while(TRUE){
+                $ret = $this->retries;
+                $this->retries = [];
+                $this->runBackup($ret);
+                $this->cmain['retries']--;
+                if($this->retries == []){
+                    MyLog::error("[".get_class($this)."] All devices was Dumped!!!");
+                    MyLog::error("[".get_class($this)."] All devices was Dumped!!!");
+                    MyLog::error("[".get_class($this)."] All devices was Dumped!!!");
+                    break;
+                }
+                if($this->cmain['retries'] == 0){
+                    MyLog::crititcal("[".get_class($this)."] Cant dump next devices, retries ended",$this->retries);
+                    break;
+                }
+                MyLog::warning("[".get_class($this)."] Not all dumped, sleep next - ".$this->cmain['retries_timeout'].". Retries left ".$this->cmain['retries'].". Need to dump ",$this->retries);
+                sleep($this->cmain['retries_timeout']);
+            }
+        }
     }
     private function runBackup($devs){
         foreach($devs as $name => $dev){
@@ -43,7 +70,9 @@ class Starter
             }
             $connect = new $con_class($dev,$device_config[$dev['model']]);
             $this->connector->setDriver($connect);
-            $this->connector->start();
+            if($this->connector->start() === FALSE){
+                $this->retries[$name] = $dev;
+            }
         }
     }
 }

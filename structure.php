@@ -5,7 +5,7 @@ return [
         $type = $db_config['type'];
         $driver = $container->get(ucfirst($type));
         $log = $container->get('logs');
-        return new edrard\Bconf\Config\Config($driver,$container->get('db'),$container->get('save'),$container->get('group'),$container->get('disable'),$container->get('log_folder'));
+        return new edrard\Bconf\Config\Config($driver,$container->get('db'),$container->get('save'),$container->get('group'),$container->get('disable'),$container->get('log_folder'),$container->get('main'));
     },
     Json::class => function ($container) {
         return new edrard\Bconf\Config\Drivers\Json($container->get('db'),$container->get('group'));

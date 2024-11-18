@@ -8,6 +8,10 @@ return array(
     'save' => [
         'path' => 'Dumps',
     ],
+    'main' => [
+        'retries' => 10,
+        'retries_timeout' => 10,
+    ],
     'disable' => [
         'dumping' => 0 #Disable Dumping for testing
     ],

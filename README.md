@@ -79,6 +79,10 @@ return array(
     'disable' => [
         'dumping' => 1 #Disable Dumping for testing
     ],
+    'main' => [
+        'retries' => 10,
+        'retries_timeout' => 10,
+    ],
     'logs' => [
         'file' => [
             'dst' => 'logs',
@@ -103,6 +107,8 @@ return array(
 The configuration should begin with the _config.php_ file. There are two parameters: _**db**_ and **_save_**. In the **_db_** section, you can configure the database type where the connection settings for your devices are stored; currently, only _json_ is available, along with the path to the _json_ file. The second parameter, **_save_**, allows you to specify the path where the dumps of your device configuration files should be saved.
 
 The **_disable_** section includes the **_dump_** parameter. If it is set to 1, the configuration collection system is disabled for testing purposes.
+
+In the **_main_** section, you can specify the number of retry attempts **_retries_** as well as the interval between attempts in seconds **_retries_timeout_**.
 
 The **_logs_** section allows us to configure log email notifications. The **_separate_** parameter indicates that logs should be sent separately. In the **_file_** settings, you can specify the folder where logs will be stored and set their level: **_full_** if you want to receive informational logs, or **_debug_**, which automatically includes full logs and debug logs. **_per_run_** creates a new log with each run
 
@@ -203,6 +209,11 @@ You can specify multiple groups, separating them with a comma:
 ```sh
 php run.php Client,Vamark
 ```
+Additionally, you can specify a subfolder for logging by adding it after a space.
+```sh
+php run.php Client,Vamark Special_Folder
+```
+
 For automatic collection, simply create a cron job to run these commands.
 
 You can also initiate parallel collection for all groups using _**gen_parallel.php**_. All you need is permission to use the **_exec_** function.

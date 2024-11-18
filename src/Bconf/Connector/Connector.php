@@ -45,10 +45,11 @@ class Connector
                 $this->driver->runAfterCommand();
                 MyLog::info("[".get_class($this)."] Run after command",[]);
             }
-            $this->save_config->saveDump($export,$this->driver->getDeviceConfig());
+            return $this->save_config->saveDump($export,$this->driver->getDeviceConfig());
         }Catch (\Exception $e) {
             MyLog::critical("[".get_class($this)."] Error: ".$e->getMessage(),$this->driver->getDeviceConfig());
             echo ($e->getMessage());
+            return FALSE;
         }
     }
 }

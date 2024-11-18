@@ -16,7 +16,7 @@ class Config
     protected $log_folder;
     protected $dev_conf = ['pre_command' => [''],'after_command' => [''],'command_end' => "\n","exec_type" => "write","enablePTY" => TRUE,"timeout" => 15,"command_end" => "", "config_filtets" => []];
 
-    function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder){
+    function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder,array $main){
         $this->config = $config;
         MyLog::info("[".get_class($this)."] Db config",$this->config);
         $this->save = $save;
@@ -27,6 +27,9 @@ class Config
         if($this->config['disable']['dumping'] == 1){
             MyLog::warning("[".get_class($this)."] Dumping was disabled",[]);
         }
+        $this->config['main'] = $main;
+        $this->retriesCheck();
+        MyLog::info("[".get_class($this)."] Main config",$main);
         $this->groups = $groups;
         $this->log_folder = $log_folder;
         $this->logFolderStatus();
@@ -43,6 +46,11 @@ class Config
     }
     public function getConfig(){
         return $this->config;
+    }
+    private function retriesCheck(){
+        $this->config['main']['retries'] = (int) $this->config['main']['retries'];
+        $this->config['main']['retries_timeout'] = (int) $this->config['main']['retries_timeout'];
+        MyLog::info("[".get_class($this)."] Retries config",$this->config['main']);
     }
     private function logFolderStatus(){
         if(!$this->log_folder){

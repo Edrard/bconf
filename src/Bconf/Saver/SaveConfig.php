@@ -33,18 +33,23 @@ class SaveConfig
     }
     public function saveDump($dump,$device_config){
         $this->device_config = $device_config;
-        $this->checkDump($dump);
+        if(!$this->checkDump($dump)){
+            return FALSE;
+        }
         $this->path = rtrim($this->config->getSaverConfig()['path'],'/').'/'.$this->device_config['group'].'/'.$this->device_config['model'].'/'.$this->device_config['type'].'/'.$this->device_config['name'].'_'.$this->device_config['ip'];
         MyLog::info("[".get_class($this)."] Path to save config ".$this->path,[]);
         $this->base_last = $this->path.'/'.$this->device_config['name'].'_base.last.dump';
         $this->checkDeviceFolder();
         $this->getBaseDump($this->cleaneDump($dump));
+        return TRUE;
 
     }
     protected function checkDump($dump){
         if(!trim($dump)){
-            MyLog::warning("[".get_class($this)."] Saving empty dump for device ".$this->device_config['name'],[]);
+            MyLog::warning("[".get_class($this)."] Empty dump for device ".$this->device_config['name'],[]);
+            return FALSE;
         }
+        return TRUE;
     }
     protected function getBaseDump($new_dump){
         if (! $this->fs->exists($this->base_last)) {
