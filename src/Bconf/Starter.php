@@ -22,10 +22,10 @@ class Starter
         $this->connector = $con;
         $this->cmain = $this->config->getConfig()['main'];
     }
-    public function getDevices(){
+    public function getDevices($devices = array()){
         MyLog::info("[".get_class($this)."] Starting dumping process",[]);
         $driver = $this->config->getDriver();
-        $devices = $driver->getDevices();
+        $devices = $devices == [] ? $driver->getDevices() : $devices;
         foreach($devices as $devs ){
             $this->runBackup($devs);
         }
@@ -36,7 +36,7 @@ class Starter
         return $driver->getGroups();
     }
     private function retries(){
-        if($this->cmain['retries'] != [] && $this->cmain['retries'] > 0){
+        if($this->retries != [] && $this->cmain['retries'] > 0){
             MyLog::warning("[".get_class($this)."] Not all dumped. Retries ".$this->cmain['retries'].". Need to dump ",$this->retries);
             while(TRUE){
                 $ret = $this->retries;
