@@ -37,23 +37,21 @@ class Starter
     }
     private function retries(){
         if($this->retries != [] && $this->cmain['retries'] > 0){
-            MyLog::warning("[".get_class($this)."] Not all dumped. Retries ".$this->cmain['retries'].". Need to dump ",$this->retries);
+            MyLog::info("[".get_class($this)."] Not all dumped. Retries ".$this->cmain['retries'].". Need to dump ",$this->retries);
             while(TRUE){
                 $ret = $this->retries;
                 $this->retries = [];
                 $this->runBackup($ret);
                 $this->cmain['retries']--;
                 if($this->retries == []){
-                    MyLog::error("[".get_class($this)."] All devices was Dumped!!!");
-                    MyLog::error("[".get_class($this)."] All devices was Dumped!!!");
-                    MyLog::error("[".get_class($this)."] All devices was Dumped!!!");
+                    MyLog::info("[".get_class($this)."] All devices was Dumped!!!");
                     break;
                 }
                 if($this->cmain['retries'] == 0){
                     MyLog::crititcal("[".get_class($this)."] Cant dump next devices, retries ended",$this->retries);
                     break;
                 }
-                MyLog::warning("[".get_class($this)."] Not all dumped, sleep next - ".$this->cmain['retries_timeout'].". Retries left ".$this->cmain['retries'].". Need to dump ",$this->retries);
+                MyLog::info("[".get_class($this)."] Not all dumped, sleep next - ".$this->cmain['retries_timeout'].". Retries left ".$this->cmain['retries'].". Need to dump ",$this->retries);
                 sleep($this->cmain['retries_timeout']);
             }
         }
