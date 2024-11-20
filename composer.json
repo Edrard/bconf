@@ -30,7 +30,8 @@
         "php-di/php-di": "^6.4",
         "nesbot/carbon": "^2.55",
         "phpseclib/phpseclib": "^3.0",
-        "symfony/filesystem": "^5.4"
+        "symfony/filesystem": "^5.4",
+        "pear/console_commandline": "^1.2"
     },
     "autoload": {
         "psr-4": {

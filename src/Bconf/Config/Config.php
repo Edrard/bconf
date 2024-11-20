@@ -23,12 +23,11 @@ class Config
         MyLog::info("[".get_class($this)."] Save config",$this->save);
         $this->driver = $driver;
         MyLog::info("[".get_class($this)."] Db driver was setted",[]);
+
         $this->config['disable'] = $disable;
         if($this->config['disable']['dumping'] == 1){
             MyLog::warning("[".get_class($this)."] Dumping was disabled",[]);
         }
-        $this->config['main']['retries_timeout'] = 1800;
-        $this->config['main']['retries'] = 10;
         $this->config['main'] = $main;
         $this->retriesCheck();
         MyLog::info("[".get_class($this)."] Main config",$main);
@@ -48,6 +47,9 @@ class Config
     }
     public function getConfig(){
         return $this->config;
+    }
+    public function changeConfig(array $config){
+        $this->config = $config;
     }
     private function retriesCheck(){
         $this->config['main']['retries'] = (int) $this->config['main']['retries'];

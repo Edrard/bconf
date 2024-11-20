@@ -13,7 +13,7 @@ use edrard\Log\Timer;
 use edrard\MyLogMail\LogInitiation;
 
 $container = include 'bootstrap.php';
-
+MyLog::info('[Paralell run] Starting parallel processes',[]);
 $path = pathinfo(__FILE__);
 
 try{
@@ -21,11 +21,12 @@ try{
     $groups = $starter->getGroups();
     if(is_array($groups) && $groups !== []){
         foreach($groups as $group){
-            exec("nohup php run.php ".$group." ".$group."  > /dev/null 2>/dev/null &");
+            MyLog::info('[Paralell run] Starting dump for group: '.$group,[]);
+            exec("nohup php run.php -g ".$group." -l ".$group."  > /dev/null 2>/dev/null &");
         }
     }
 }Catch (\Exception $e) {
     MyLog::critical($e->getMessage(),[]);
     die($e->getMessage());
 }
-MyLog::info("Ended in - ".Timer::getTime());
+MyLog::info("Ended in - ".Timer::getTime(),[]);

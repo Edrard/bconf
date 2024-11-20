@@ -18,6 +18,7 @@ class Ssh implements IntConnector
         $this->config = $config;
         $this->device_config = $device_config;
         $this->driver = new SSH2($this->config['ip'],$this->config['port']);
+        MyLog::debug("[".get_class($this)."] Trying to connect ",[$this->config['ip'],$this->config['port']]);
     }
     public function getDeviceConfig(){
         $config = $this->config;

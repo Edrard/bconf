@@ -45,9 +45,14 @@ class Connector
                 $this->driver->runAfterCommand();
                 MyLog::info("[".get_class($this)."] Run after command",[]);
             }
+            if($this->config['disable']['saving'] == 1){
+                MyLog::info("[".get_class($this)."] Enable process",[]);
+                echo "\n\n\n".$this->save_config->cleaneDump($export,$this->driver->getDeviceConfig())."\n\n\n";
+                return TRUE;
+            }
             return $this->save_config->saveDump($export,$this->driver->getDeviceConfig());
         }Catch (\Exception $e) {
-            MyLog::critical("[".get_class($this)."] Error: ".$e->getMessage(),$this->driver->getDeviceConfig());
+            MyLog::critical("[".get_class($this)."] Error: ".$e->getMessage(),[$this->driver->getDeviceConfig()['name']]);
             echo ($e->getMessage());
             return FALSE;
         }

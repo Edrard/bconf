@@ -47,6 +47,27 @@ class Json implements IntDbDriver
         }
         return $groups;
     }
+    public function searchDevice(array $opt){
+        if($opt['name']){
+            return $this->searchByName($opt['name']);
+        }
+        if($opt['ip']){
+            return $this->searchByIp($opt['ip']);
+        }
+        throw new \Exception('Please set one of the parameters, name or ip. Use -h to see how to do it');
+    }
+    protected function searchByIp($ip){
+        if($search = array_recursive_search($ip,$this->data)){
+            return [$search => $this->data[$search]] ;
+        }
+        throw new \Exception('Can not find device with IP '.$ip.' in database');
+    }
+    protected function searchByName($name){
+        if(isset($this->data[$name])){
+            return [$name =>$this->data[$name]];
+        }
+        throw new \Exception('Can not find device with name '.$name.' in database');
+    }
     protected function readDb(){
         $data = file_get_contents($this->db['path']);
         MyLog::info("[".get_class($this)."] Reading Db",[]);

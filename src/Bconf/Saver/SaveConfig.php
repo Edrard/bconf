@@ -17,7 +17,7 @@ class SaveConfig
     private $fs;
     private $diff;
     private $config;
-    private $device_config;
+    private $device_config = [];
     private $path;
     private $time;
     private $filters;
@@ -89,7 +89,10 @@ class SaveConfig
         $dump = preg_replace('/^#.*/m', '', $dump);
         return $dump;
     }
-    protected function cleaneDump($dump){
+    public function cleaneDump($dump,$device_config = array()){
+        if($device_config != [] && $this->device_config == []){
+            $this->device_config = $device_config;
+        }
         if($this->device_config['device_config']['config_filtets'] != array() &&
         is_array($this->device_config['device_config']['config_filtets']))
         {

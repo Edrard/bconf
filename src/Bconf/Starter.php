@@ -37,7 +37,7 @@ class Starter
     }
     private function retries(){
         if($this->retries != [] && $this->cmain['retries'] > 0){
-            MyLog::info("[".get_class($this)."] Not all dumped. Retries ".$this->cmain['retries'].". Need to dump ",$this->retries);
+            MyLog::info("[".get_class($this)."] Not all dumped. Retries ".$this->cmain['retries'].". Need to dump ",array_keys($this->retries));
             while(TRUE){
                 $ret = $this->retries;
                 $this->retries = [];
@@ -48,10 +48,10 @@ class Starter
                     break;
                 }
                 if($this->cmain['retries'] == 0){
-                    MyLog::crititcal("[".get_class($this)."] Cant dump next devices, retries ended",$this->retries);
+                    MyLog::critical("[".get_class($this)."] Cant dump next devices, retries ended",array_keys($this->retries));
                     break;
                 }
-                MyLog::info("[".get_class($this)."] Not all dumped, sleep next - ".$this->cmain['retries_timeout'].". Retries left ".$this->cmain['retries'].". Need to dump ",$this->retries);
+                MyLog::info("[".get_class($this)."] Not all dumped, sleep next - ".$this->cmain['retries_timeout'].". Retries left ".$this->cmain['retries'].". Need to dump ",array_keys($this->retries));
                 sleep($this->cmain['retries_timeout']);
             }
         }
@@ -62,7 +62,7 @@ class Starter
             $con = ucfirst($dev['connect']);
             $con_class = "edrard\\Bconf\\Connector\\$con";
             $device_config = $this->config->getDevicesConfigs();
-            MyLog::info("[".get_class($this)."] Dumping device ".$dev['name'],$dev);
+            MyLog::info("[".get_class($this)."] Dumping device ".$dev['name'],[]);
             if(!isset($device_config[$dev['model']])){
                 throw new NoDeviceConfigException("Cant find device config for ".$dev['model'],'error');
             }
