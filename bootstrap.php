@@ -14,7 +14,7 @@ $cli = new CliParser(new \Console_CommandLine());
 $options = $cli->runParser();
 $config = include "config.php";
 if($options['groups']){
-    $config['logs']['mail']['subject'] .= $config['logs']['mail']['subject'].' '.$options['groups'];
+    $config['logs']['mail']['subject'] .= ' '.$options['groups'];
 }
 if($options['log_dir']){
     $config['logs']['file']['dst'] = rtrim($config['logs']['file']['dst'],'/').'/'.$options['log_dir'];
