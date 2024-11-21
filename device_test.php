@@ -25,6 +25,8 @@ try{
     $config['main']['retries'] = 0;
     $config['disable']['saving'] = 1;
     $config['logs']['file']['disable'] = 0;
+    $config['logs']['file']['full'] = 1;
+    $config['logs']['mail']['user'] = 0;
 
     new LogInitiation($config['logs'],'log',Handlers::stdout());
 
