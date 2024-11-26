@@ -3,7 +3,8 @@
 
 ## Preview
 
-Bconf it is a simple device configuration backup software package. You can run it on any Linux system; you’ll just need PHP and a few additional packages. I started developing this product as an alternative to well-known projects, with the main goals being speed, compactness, and flexibility.
+|![enter image description here](https://github.com/Edrard/bconf/blob/main/bconf_logo_small.jpg)|Bconf it is a simple device configuration backup software package. You can run it on any Linux system; you’ll just need PHP and a few additional packages. I started developing this product as an alternative to well-known projects, with the main goals being speed, compactness, and flexibility.  |
+|--|--|
 
 This project is still under development, and you're currently seeing only the basic version of its first component, which is responsible for configuration collection. However, if you have any ideas, feel free to reach out to me.
 There's also a plan to develop a web interface for managing devices and their configurations.
