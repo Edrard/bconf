@@ -49,13 +49,13 @@ class Ssh implements IntConnector
         }
     }
     public function enable(){
-        if($this->config['config']['enable'] == 1){
+        if($this->config['config_enable'] == 1){
             MyLog::debug("[".get_class($this)."] Starting enable ",[]);
-            $this->driver->write($this->config['config']['enable_command'].$this->device_config['command_end']);
-            $read = $this->driver->read($this->config['config']['enable_pass_str']); // Чекаємо запит на пароль для enable режиму
+            $this->driver->write($this->config['config_enable_command'].$this->device_config['command_end']);
+            $read = $this->driver->read($this->config['config_enable_pass_str']); // Чекаємо запит на пароль для enable режиму
             MyLog::debug("[".get_class($this)."] Read ",[$read]);
-            $this->driver->write($this->config['config']['enable_pass'].$this->device_config['command_end']); // Введи свій пароль для режиму enable
-            $read = $this->driver->read($this->config['config']['search']);
+            $this->driver->write($this->config['config_enable_pass'].$this->device_config['command_end']); // Введи свій пароль для режиму enable
+            $read = $this->driver->read($this->config['config_search']);
             MyLog::debug("[".get_class($this)."] Read ",[$read]);
         }
     }
@@ -64,7 +64,7 @@ class Ssh implements IntConnector
         foreach($this->device_config['pre_command'] as $command){
             if($command){
                 $this->driver->write($command.$this->device_config['command_end']);
-                $read = $this->driver->read($this->config['config']['search']);
+                $read = $this->driver->read($this->config['config_search']);
                 MyLog::debug("[".get_class($this)."] Read ",[$read]);
             }
         }
@@ -74,7 +74,7 @@ class Ssh implements IntConnector
         foreach($this->device_config['after_command'] as $command){
             if($command){
                 $this->driver->write($command.$this->device_config['command_end']);
-                $read = $this->driver->read($this->config['config']['search']);
+                $read = $this->driver->read($this->config['config_search']);
                 MyLog::debug("[".get_class($this)."] Read ",[$read]);
             }
         }
@@ -91,7 +91,7 @@ class Ssh implements IntConnector
         foreach($this->device_config['config_export'] as $command){
             if($command){
                 $this->driver->exec($command.$this->device_config['command_end']);
-                $output .= $this->driver->read($this->config['config']['search'])."\n";
+                $output .= $this->driver->read($this->config['config_search'])."\n";
             }
         }
         return $output;
@@ -102,7 +102,7 @@ class Ssh implements IntConnector
         foreach($this->device_config['config_export'] as $command){
             if($command){
                 $this->driver->write($command.$this->device_config['command_end']);
-                $output .= $this->driver->read($this->config['config']['search'])."\n";
+                $output .= $this->driver->read($this->config['config_search'])."\n";
             }
         }
         return $output;

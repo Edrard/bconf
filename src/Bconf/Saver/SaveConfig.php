@@ -101,7 +101,7 @@ class SaveConfig
         }
 
         Filters::setCommands('',$this->device_config['device_config']['config_export']);
-        Filters::setShellPrompt('',$this->device_config['config']['search']);
+        Filters::setShellPrompt('',$this->device_config['config_search']);
         foreach($this->filters as $filter){
             $dump = Filters::{$filter}($dump);
             MyLog::info("[".get_class($this)."] Filter ".$filter." appling on dump",[]);

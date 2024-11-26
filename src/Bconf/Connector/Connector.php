@@ -53,7 +53,7 @@ class Connector
             return $this->save_config->saveDump($export,$this->driver->getDeviceConfig());
         }Catch (\Exception $e) {
             MyLog::critical("[".get_class($this)."] Error: ".$e->getMessage(),[$this->driver->getDeviceConfig()['name']]);
-            echo ($e->getMessage());
+            echo  $e->getMessage()."\n";
             return FALSE;
         }
     }

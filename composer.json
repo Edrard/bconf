@@ -15,6 +15,10 @@
         },
         {
             "type": "git",
+            "url": "https://github.com/Edrard/DbCreate.git"
+        },
+        {
+            "type": "git",
             "url": "https://github.com/Edrard/MyLogMail"
         },
         {
@@ -31,7 +35,10 @@
         "nesbot/carbon": "^2.55",
         "phpseclib/phpseclib": "^3.0",
         "symfony/filesystem": "^5.4",
-        "pear/console_commandline": "^1.2"
+        "pear/console_commandline": "^1.2",
+        "pecee/pixie": "^4.16",
+        "edrard/dbcreate": "dev-master",
+        "lulco/phoenix": "^2.6"
     },
     "autoload": {
         "psr-4": {

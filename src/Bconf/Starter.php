@@ -58,7 +58,8 @@ class Starter
     }
     private function runBackup($devs){
         foreach($devs as $name => $dev){
-            $dev['name'] = $name;
+            $dev = flatten_array((array) $dev);
+            $dev['name'] = isset($dev['name']) && $dev['name'] ? $dev['name'] : $name;
             $con = ucfirst($dev['connect']);
             $con_class = "edrard\\Bconf\\Connector\\$con";
             $device_config = $this->config->getDevicesConfigs();
@@ -69,7 +70,7 @@ class Starter
             $connect = new $con_class($dev,$device_config[$dev['model']]);
             $this->connector->setDriver($connect);
             if($this->connector->start() === FALSE){
-                $this->retries[$name] = $dev;
+                $this->retries[$dev['name']] = $dev;
             }
         }
     }
