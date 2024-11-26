@@ -103,4 +103,7 @@ return array(
     ]
 );
 EOF
+
+php vendor/bin/phoenix migrate
+
 fi
