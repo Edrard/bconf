@@ -47,7 +47,6 @@ git clone https://github.com/Edrard/bconf.git
 ```sh
 cd bconf
 ```
-``
 
 4. Run install.sh script
 
