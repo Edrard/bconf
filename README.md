@@ -49,12 +49,10 @@ cd bconf
 ```
 ``
 
-4. Install the required PHP packages
+4. Run install.sh script
 
 ```sh
-export COMPOSER_ALLOW_SUPERUSER=1
-composer self-update --2
-yes | composer install --no-dev
+bash install.sh
 ```
 ### Warning
 Do not remove .git folder, you will need it for future updates
@@ -77,7 +75,8 @@ return array(
         'path' => 'Dumps',
     ],
     'disable' => [
-        'dumping' => 1 #Disable Dumping for testing
+        'dumping' => 0, #Disable Dumping for testing
+        'saving' => 0 #Disable saving, instead show in cli
     ],
     'main' => [
         'retries' => 10,
@@ -106,7 +105,7 @@ return array(
 
 The configuration should begin with the _config.php_ file. There are two parameters: _**db**_ and **_save_**. In the **_db_** section, you can configure the database type where the connection settings for your devices are stored; currently, only _json_ is available, along with the path to the _json_ file. The second parameter, **_save_**, allows you to specify the path where the dumps of your device configuration files should be saved.
 
-The **_disable_** section includes the **_dump_** parameter. If it is set to 1, the configuration collection system is disabled for testing purposes.
+The **_disable_** section includes the **_dumping_** parameter. If it is set to 1, the configuration collection system is disabled for testing purposes. By setting the **_saving_** parameter to 1, logs will be output to the console.
 
 In the **_main_** section, you can specify the number of retry attempts **_retries_** as well as the interval between attempts in seconds **_retries_timeout_**.
 
@@ -194,6 +193,12 @@ Here, we have three arrays of parameters:
 **command_end**: The command input character.
 **config_filtets**: Leave empty, if you wish to apply all filters to dump
 
+## Tools
+
+To test the availability of a specific device, you can use the _**device_test.php utility**_. Run it with the -n flag to specify the device name or -i to specify the IP address.
+
+In the _**tools folder**_, you'll also find the _**convert.php**_ converter for transforming a JSON database into a MySQL database.
+
 ## Run
 
 To start the collection process, you need to run the command:
@@ -203,15 +208,15 @@ php run.php
 This will start the collection of configurations for all devices. However, if you want to collect configurations for a specific group, such as _Client_, you need to specify it as an additional parameter:
 
  ```sh
-php run.php Client
+php run.php -g Client
 ```
 You can specify multiple groups, separating them with a comma:
 ```sh
-php run.php Client,Vamark
+php run.php -g Client,Vamark
 ```
 Additionally, you can specify a subfolder for logging by adding it after a space.
 ```sh
-php run.php Client,Vamark Special_Folder
+php run.php -g Client,Vamark -l Special_Folder
 ```
 
 For automatic collection, simply create a cron job to run these commands.
