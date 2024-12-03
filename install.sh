@@ -10,6 +10,24 @@ read -r -p "Which database version would you like to use json or mysql[json|mysq
 response=${response,,} # tolower
 if [[ $response =~ ^(json) ]] || [[ -z $response ]]; then
 
+cat <<EOF > db.json
+{
+    "test-router":{
+        "ip":"0.0.0.0",
+        "port":22,
+        "login":"admin+ct",
+        "password":"password",
+        "group":"Vamark",
+        "type":"router",
+        "connect":"ssh",
+        "model":"mikrotik",
+        "config":{
+            "enable":"0",
+            "search":"[admin@vamarkgw01] >"
+        }
+    }
+}
+EOF
     echo "Thank you! Please refer to the documentation and make the necessary adjustments in the config.php configuration file"
     exit
 fi
