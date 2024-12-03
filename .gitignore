@@ -1,5 +1,5 @@
+db.json
 /vendor
 composer.lock
 /example
-db.json
 /logs/*
