@@ -6,6 +6,8 @@ use edrard\Log\MyLog;
 use edrard\Bconf\Connector\Connector;
 use edrard\Bconf\Config\Config;
 use edrard\Exc\NoDeviceConfigException;
+use edrard\Exc\WrongDeviceConfig;
+use edrard\Bconf\Config\DeviceConfigChecker;
 
 
 class Starter
@@ -45,6 +47,7 @@ class Starter
                 $this->cmain['retries']--;
                 if($this->retries == []){
                     MyLog::info("[".get_class($this)."] All devices was Dumped!!!");
+                    MyLog::critical("[".get_class($this)."] All devices was Dumped!!!");
                     break;
                 }
                 if($this->cmain['retries'] == 0){
@@ -58,19 +61,27 @@ class Starter
     }
     private function runBackup($devs){
         foreach($devs as $name => $dev){
-            $dev = flatten_array((array) $dev);
-            $dev['name'] = isset($dev['name']) && $dev['name'] ? $dev['name'] : $name;
-            $con = ucfirst($dev['connect']);
-            $con_class = "edrard\\Bconf\\Connector\\$con";
-            $device_config = $this->config->getDevicesConfigs();
-            MyLog::info("[".get_class($this)."] Dumping device ".$dev['name'],[]);
-            if(!isset($device_config[$dev['model']])){
-                throw new NoDeviceConfigException("Cant find device config for ".$dev['model'],'error');
-            }
-            $connect = new $con_class($dev,$device_config[$dev['model']]);
-            $this->connector->setDriver($connect);
-            if($this->connector->start() === FALSE){
-                $this->retries[$dev['name']] = $dev;
+            try{
+                $dev = flatten_array((array) $dev);
+                $dev['name'] = isset($dev['name']) && $dev['name'] ? $dev['name'] : $name;
+                $key_check = DeviceConfigChecker::check($dev);
+                if($key_check !== FALSE){
+                    throw new WrongDeviceConfig("Wrong device config for: ".$dev['name'].'. Cant find key - '.$key_check,'error');
+                }
+                $con = ucfirst($dev['connect']);
+                $con_class = "edrard\\Bconf\\Connector\\$con";
+                $device_config = $this->config->getDevicesConfigs();
+                MyLog::info("[".get_class($this)."] Dumping device ".$dev['name'],[]);
+                if(!isset($device_config[$dev['model']])){
+                    throw new NoDeviceConfigException("Cant find device config for ".$dev['model'],'error');
+                }
+                $connect = new $con_class($dev,$device_config[$dev['model']]);
+                $this->connector->setDriver($connect);
+                if($this->connector->start() === FALSE){
+                    $this->retries[$dev['name']] = $dev;
+                }
+            }Catch (WrongDeviceConfig | NoDeviceConfigException $e) {
+                MyLog::info("[".get_class($this)."] Skiping device: ".$dev['name'],[]);
             }
         }
     }
