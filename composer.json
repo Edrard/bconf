@@ -24,6 +24,10 @@
         {
             "type": "git",
             "url": "https://github.com/Edrard/MyLog.git"
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/Edrard/Telnet.git"
         }
     ],
     "require": {
@@ -38,7 +42,8 @@
         "pear/console_commandline": "^1.2",
         "pecee/pixie": "^4.16",
         "edrard/dbcreate": "dev-master",
-        "lulco/phoenix": "^2.6"
+        "lulco/phoenix": "^2.6",
+        "edrard/telnet": "dev-master"
     },
     "autoload": {
         "psr-4": {

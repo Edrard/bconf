@@ -15,6 +15,7 @@ class Config
     protected $devices;
     protected $log_folder;
     protected $dev_conf = ['pre_command' => [''],'after_command' => [''],'command_end' => "\n","exec_type" => "write","enablePTY" => TRUE,"timeout" => 15,"command_end" => "", "config_filtets" => []];
+    protected $dev_conf_telnet = ['telnet_user_prompt' => 'login:','telnet_pass_prompt' => 'password:','telnet_prompt_reg' => '\$','telnet_command_end' => "\r\n"];
 
     function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder,array $main){
         $this->config = $config;
@@ -84,6 +85,12 @@ class Config
         foreach($this->dev_conf as $name => $var){
             if(!isset($dev_con[$name])){
                 MyLog::info("[".get_class($this)."] Device config ".$type." missing row ".$name,[]);
+                $dev_con[$name] = $var;
+            }
+        }
+        foreach($this->dev_conf_telnet as $name => $var){
+            if(!isset($dev_con[$name])){
+                MyLog::info("[".get_class($this)."] Device telnet config ".$type." missing row ".$name,[]);
                 $dev_con[$name] = $var;
             }
         }

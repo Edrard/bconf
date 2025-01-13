@@ -50,7 +50,7 @@ class Starter
                     MyLog::critical("[".get_class($this)."] All devices was Dumped!!!");
                     break;
                 }
-                if($this->cmain['retries'] == 0){
+                if($this->cmain['retries'] <= 0){
                     MyLog::critical("[".get_class($this)."] Cant dump next devices, retries ended",array_keys($this->retries));
                     break;
                 }

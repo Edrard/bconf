@@ -8,5 +8,5 @@ return [
     "enablePTY" => TRUE,
     "timeout" => 15,
     "command_end" => "",
-    "config_filtets" => []
+    "config_filtets" => [],
 ];

@@ -9,7 +9,7 @@ return array(
         'path' => 'Dumps',
     ],
     'main' => [
-        'retries' => 10,
+        'retries' => 0,
         'retries_timeout' => 10,
         'disable_logs_send' => 3 # TODO: Days after, disable logs sending
     ],

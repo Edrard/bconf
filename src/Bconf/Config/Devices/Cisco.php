@@ -8,5 +8,10 @@ return [
     "enablePTY" => False,
     "timeout" => 30,
     "command_end" => "\n",
-    "config_filtets" => []
+    "config_filtets" => [],
+    "telnet_user_prompt" => 'Username:',
+    "telnet_pass_prompt" => 'Password:',
+    "telnet_prompt_reg" => '[>#]',
+    "telnet_command_end" => "",
+
 ];

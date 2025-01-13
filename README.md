@@ -154,6 +154,8 @@ The **group** parameter allows you to organize your devices into groups, enablin
 
 The **type** parameter currently has no effect, but in the future, it will allow you to sort devices.
 
+The **connect** parameter can be ssh o telnet for now
+
 The **model** parameter indicates the device manufacturer, which affects additional parameters for processing and access (more details in the _Model_ section).
 
 In the **config** section, you can specify whether the device should be switched to _enable mode_. If **enable** is set to 1, it will be required; if set to 0, it will not. If switching is needed, parameters like **enable_command** (the command to switch to this mode), **enable_pass** (the password to enter enable mode), and **enable_pass_str** (defines the prompt string for entering the password) are required.
@@ -178,6 +180,10 @@ return [
     "timeout" => 30,
     "command_end" => "\n"
     "config_filtets" => []
+    "telnet_user_prompt" => 'Username:',
+    "telnet_pass_prompt" => 'Password:',
+    "telnet_prompt_reg" => '[>#]',
+    "telnet_command_end" => "",
 ];
 ```
 Here, we have three arrays of parameters:
@@ -187,11 +193,22 @@ Here, we have three arrays of parameters:
 -   **after_command**: The commands that will be executed after the completion of the previous ones.
 
 **exec_type** determines the method of executing the commands (for more details, refer to: [phpseclib commands](https://phpseclib.com/docs/commands)).
+
 **enablePTY**: Indicates whether to enable PTY or not.
+
 **timeout**: The timeout for executing the commands.
+
 **command_end**: The command input character.
+
 **config_filtets**: Leave empty, if you wish to apply all filters to dump
 
+**telnet_user_prompt**: Telnet user prompt
+
+**telnet_pass_prompt**: Telnet password prompt
+
+**telnet_prompt_reg**: Telnet search shell prompt
+
+**telnet_command_end**: The command input character for telnet.
 ## Tools
 
 To test the availability of a specific device, you can use the _**device_test.php utility**_. Run it with the -n flag to specify the device name or -i to specify the IP address.
