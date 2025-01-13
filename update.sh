@@ -15,7 +15,7 @@ fi
 
 export COMPOSER_ALLOW_SUPERUSER=1
 composer self-update --2
-yes | composer install --no-dev
+yes | composer update --no-dev
 export COMPOSER_ALLOW_SUPERUSER=0
 
 echo -e "${db}" > db.json
