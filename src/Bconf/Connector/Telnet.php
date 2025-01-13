@@ -17,7 +17,7 @@ class Telnet implements IntConnector
     function __construct(array $config,array $device_config){
         $this->config = $config;
         $this->device_config = $device_config;
-        $this->driver = new TelnetRunner($this->config['ip'],$this->config['port'],$this->device_config['timeout']);
+        $this->driver = new TelnetRunner($this->config['ip'],$this->config['port'],$this->device_config['timeout'],$this->device_config['timeout']);
         MyLog::debug("[".get_class($this)."] Trying to connect ",[$this->config['ip'],$this->config['port']]);
     }
     public function getDeviceConfig(){
