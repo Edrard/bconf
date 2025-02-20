@@ -1,5 +1,5 @@
 
-![enter image description here](https://github.com/Edrard/bconf/blob/main/images/bconf_string_small.png)
+![enter image description here](https://github.com/Edrard/bconf/blob/main/images/small_bconf_string_black.png)
 
 ## Preview
 
