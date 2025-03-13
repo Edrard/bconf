@@ -38,6 +38,11 @@ class DbWork
         return $this->db->table('group')
         ->get();
     }
+    public function getConfigs(){
+        return $this->db->table('config')
+        ->setFetchMode(\PDO::FETCH_ASSOC)
+        ->get();
+    }
     public function searchForDevice($search,$type){
         return (array) $this->db->table('devices_config')
         ->where('devices_config.'.$type, '=', $search)

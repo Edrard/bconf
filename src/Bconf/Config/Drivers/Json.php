@@ -77,4 +77,7 @@ class Json implements IntDbDriver
         }
         MyLog::info("[".get_class($this)."] DB data is fine",[]);
     }
+    public function getConfig(){
+        return [];
+    }
 }

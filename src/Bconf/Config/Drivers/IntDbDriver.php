@@ -7,4 +7,5 @@ interface IntDbDriver
     public function getDevices($ammount);
     public function getGroups();
     public function searchDevice(array $opt);
+    public function getConfig();
 }

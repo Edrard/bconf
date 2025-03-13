@@ -67,5 +67,18 @@ class Mysql implements IntDbDriver
         }
         throw new \Exception('Can not find device with name '.$name.' in database');
     }
+    public function getConfig(){
+        $config = array_resort($this->db->getConfigs(),'name');
+
+        if(isset($config['override']) && $config['override']['value'] == 1){
+            $temp = [];
+            foreach($config as $value){
+                $temp[$value['name']] = $value['value'];
+            }
+            return unflatten_array($temp,'|');
+        }
+
+        return [];
+    }
 
 }

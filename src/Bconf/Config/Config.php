@@ -18,19 +18,22 @@ class Config
     protected $dev_conf_telnet = ['telnet_user_prompt' => 'login:','telnet_pass_prompt' => 'password:','telnet_prompt_reg' => '\$','telnet_command_end' => "\r\n"];
 
     function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder,array $main){
-        $this->config = $config;
-        MyLog::info("[".get_class($this)."] Db config",$this->config);
-        $this->save = $save;
-        MyLog::info("[".get_class($this)."] Save config",$this->save);
+
         $this->driver = $driver;
         MyLog::info("[".get_class($this)."] Db driver was setted",[]);
 
+        $this->config = $config;
+        MyLog::info("[".get_class($this)."] Db config",$this->config);
+
+        $this->config['save'] = $save;
         $this->config['disable'] = $disable;
+        $this->config['main'] = $main;
+        $this->overrideConfig($this->driver->getConfig());
+        $this->retriesCheck();
+        MyLog::info("[".get_class($this)."] Save config",$this->config['save']);
         if($this->config['disable']['dumping'] == 1){
             MyLog::warning("[".get_class($this)."] Dumping was disabled",[]);
         }
-        $this->config['main'] = $main;
-        $this->retriesCheck();
         MyLog::info("[".get_class($this)."] Main config",$main);
         $this->groups = $groups;
         $this->log_folder = $log_folder;
@@ -44,13 +47,19 @@ class Config
         return $this->driver;
     }
     public function getSaverConfig(){
-        return $this->save;
+        return $this->config['save'];
     }
     public function getConfig(){
         return $this->config;
     }
     public function changeConfig(array $config){
         $this->config = $config;
+    }
+    private function overrideConfig($get){
+
+        foreach($get as $key => $value){
+            $this->config[$key] = $value;
+        }
     }
     private function retriesCheck(){
         $this->config['main']['retries'] = (int) $this->config['main']['retries'];
