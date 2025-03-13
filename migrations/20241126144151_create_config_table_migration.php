@@ -18,94 +18,66 @@ final class CreateConfigTableMigration extends AbstractMigration
         ->addColumn('value', 'string')
         ->addIndex('name', 'unique', 'btree', 'key')
         ->create();
+
+        $set['default'] = NULL;
+        $set['null'] = TRUE;
+
+        $this->table('config', 'id')
+        ->addColumn('created_at', 'timestamp',$set)
+        ->save();
+        $this->table('config', 'id')
+        ->addColumn('updated_at', 'timestamp',$set)
+        ->save();
+
+        $date = date("Y-m-d H:i:s");
+
         $this->insert('config',[
             'name' => 'override',
-            'value' => '0'
+            'value' => '0',
+            'created_at' => $date,
+            'updated_at' => $date,
             ]
         );
         $this->insert('config',[
+            'created_at' => $date,
+            'updated_at' => $date,
             'name' => 'disable|dumping',
             'value' => '0'
             ]
         );
         $this->insert('config',[
+            'created_at' => $date,
+            'updated_at' => $date,
             'name' => 'disable|saving',
             'value' => '0'
             ]
         );
         $this->insert('config',[
+            'created_at' => $date,
+            'updated_at' => $date,
             'name' => 'save|path',
             'value' => 'Dumps'
             ]
         );
         $this->insert('config',[
-            'name' => 'logs|file|dst',
-            'value' => 'logs'
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|file|full',
-            'value' => '1'
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|file|disable',
+            'created_at' => $date,
+            'updated_at' => $date,
+            'name' => 'main|retries',
             'value' => '0'
             ]
         );
         $this->insert('config',[
-            'name' => 'logs|file|debug',
-            'value' => '0'
+            'created_at' => $date,
+            'updated_at' => $date,
+            'name' => 'main|retries_timeout',
+            'value' => '10'
             ]
         );
         $this->insert('config',[
-            'name' => 'logs|file|per_run',
-            'value' => '0'
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|user',
-            'value' => ''
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|pass',
-            'value' => ''
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|smtp',
-            'value' => ''
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|port',
-            'value' => ''
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|from',
-            'value' => ''
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|to',
-            'value' => ''
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|separate',
-            'value' => '0'
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|only_important',
-            'value' => '1'
-            ]
-        );
-        $this->insert('config',[
-            'name' => 'logs|mail|subject',
-            'value' => 'My Server'
+            'created_at' => $date,
+            'updated_at' => $date,
+            'name' => 'main|disable_logs_send',
+            'value' => '3'
             ]
         );
     }
