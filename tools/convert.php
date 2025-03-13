@@ -50,10 +50,12 @@ try{
             if($check === []){
                 $dev['name'] = $name;
                 $dev['date'] = $now;
-                $dev = getConvert($sql,$dev,'connect');
-                $dev = getConvert($sql,$dev,'group');
-                $dev = getConvert($sql,$dev,'model');
-                $dev = getConvert($sql,$dev,'type');
+                $dev['created_at'] = $now;
+                $dev['updated_at'] = $now;
+                $dev = getConvert($sql,$dev,'connect',$now);
+                $dev = getConvert($sql,$dev,'group',$now);
+                $dev = getConvert($sql,$dev,'model',$now);
+                $dev = getConvert($sql,$dev,'type',$now);
                 $sql->table('devices_config')->insert(flatten_array($dev));
                 MyLog::info('Insert device '.$name.' '.$dev['ip'],[]);
             }else{
@@ -67,12 +69,16 @@ try{
     die($e->getMessage());
 }
 
-function getConvert($sql,$dev,$type){
+function getConvert($sql,$dev,$type,$now){
     $connect = $sql->table($type)
     ->where("$type", '=', $dev[$type]);
     $connect = (array) $connect->first();
     if($connect == []){
-        $con = ["$type" => $dev[$type]];
+        $con = [
+            "$type" => $dev[$type],
+            'created_at' => $now,
+            'updated_at' => $now,
+        ];
         $connect['id'] = $sql->table($type)->insert($con);
     }
     $dev[$type] = $connect['id'];
