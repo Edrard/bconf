@@ -56,6 +56,7 @@ try{
                 $dev = getConvert($sql,$dev,'group',$now);
                 $dev = getConvert($sql,$dev,'model',$now);
                 $dev = getConvert($sql,$dev,'type',$now);
+                unset($dev['group'],$dev['connect'],$dev['model'],$dev['type']);
                 $sql->table('devices_config')->insert(flatten_array($dev));
                 MyLog::info('Insert device '.$name.' '.$dev['ip'],[]);
             }else{
@@ -81,7 +82,7 @@ function getConvert($sql,$dev,$type,$now){
         ];
         $connect['id'] = $sql->table($type)->insert($con);
     }
-    $dev[$type] = $connect['id'];
+    $dev[$type.'_id'] = $connect['id'];
     return $dev;
 }
 

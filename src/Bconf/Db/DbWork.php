@@ -28,10 +28,10 @@ class DbWork
         ->orderBy('devices_config.id', 'desc')
         ->where('status', '=', '1')
         ->whereIn('devices_config.group',$groups)
-        ->join('group', 'group.id', '=', 'devices_config.group')
-        ->join('type', 'type.id', '=', 'devices_config.type')
-        ->join('connect', 'connect.id', '=', 'devices_config.connect')
-        ->join('model', 'model.id', '=', 'devices_config.model')
+        ->join('group_id', 'group.id', '=', 'devices_config.group')
+        ->join('type_id', 'type.id', '=', 'devices_config.type')
+        ->join('connect_id', 'connect.id', '=', 'devices_config.connect')
+        ->join('model_id', 'model.id', '=', 'devices_config.model')
         ->get();
     }
     public function getGroupsFromDb(){
