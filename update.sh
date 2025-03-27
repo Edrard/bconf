@@ -18,6 +18,10 @@ composer self-update --2
 yes | composer update --no-dev
 export COMPOSER_ALLOW_SUPERUSER=0
 
+if [ ! -f phoenix.php ]; then
+    php vendor/bin/phoenix migrate
+fi
+
 echo -e "${db}" > db.json
 echo -e "${config}" > config.php
 

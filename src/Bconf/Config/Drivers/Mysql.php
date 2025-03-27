@@ -42,7 +42,7 @@ class Mysql implements IntDbDriver
         }
         $return = [];
         foreach($groups as $g){
-            $return[] = $g->group;
+            $return[$g->group] = $g->group;
         }
         return $return;
     }
