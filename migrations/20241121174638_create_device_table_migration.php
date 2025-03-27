@@ -23,7 +23,6 @@ final class CreateDeviceTableMigration extends AbstractMigration
             ->setCharset('utf8mb4')
             ->setCollation('utf8mb4_general_ci')
             ->addColumn('id', 'integer', ['autoincrement' => true])
-            ->addColumn('date', 'datetime')
             ->addColumn('name', 'string')
             ->addColumn('ip', 'string', ['length' => 39])
             ->addColumn('port', 'mediuminteger', ['length' => 6])

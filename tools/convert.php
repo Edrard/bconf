@@ -49,7 +49,6 @@ try{
             ->where("name", '=', $name)->first();
             if($check === []){
                 $dev['name'] = $name;
-                $dev['date'] = $now;
                 $dev['created_at'] = $now;
                 $dev['updated_at'] = $now;
                 $dev = getConvert($sql,$dev,'connect',$now);
