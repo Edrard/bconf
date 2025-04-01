@@ -27,7 +27,7 @@ class DbWork
         ->limit($ammount)
         ->orderBy('devices_config.id', 'desc')
         ->where('status', '=', '1')
-        ->whereIn('devices_config.group',$groups)
+        ->whereIn('devices_config.group_id',$groups)
         ->join('group', 'group.id', '=', 'devices_config.group_id')
         ->join('type', 'type.id', '=', 'devices_config.type_id')
         ->join('connect', 'connect.id', '=', 'devices_config.connect_id')
@@ -46,10 +46,10 @@ class DbWork
     public function searchForDevice($search,$type){
         return (array) $this->db->table('devices_config')
         ->where('devices_config.'.$type, '=', $search)
-        ->join('group', 'group.id', '=', 'devices_config.group')
-        ->join('type', 'type.id', '=', 'devices_config.type')
-        ->join('connect', 'connect.id', '=', 'devices_config.connect')
-        ->join('model', 'model.id', '=', 'devices_config.model')
+        ->join('group', 'group.id', '=', 'devices_config.group_id')
+        ->join('type', 'type.id', '=', 'devices_config.type_id')
+        ->join('connect', 'connect.id', '=', 'devices_config.connect_id')
+        ->join('model', 'model.id', '=', 'devices_config.model_id')
         ->first();
     }
 }
