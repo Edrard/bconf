@@ -21,9 +21,6 @@ try{
     $opt = $cli->runParser();
 
     $config = include "config.php";
-    $config['main']['retries_timeout'] = 0;
-    $config['main']['retries'] = 0;
-    $config['disable']['saving'] = 1;
     $config['logs']['file']['disable'] = 0;
     $config['logs']['file']['full'] = 1;
     $config['logs']['mail']['user'] = '';
@@ -37,8 +34,12 @@ try{
     $container->set('group', []);
     $container->set('log_folder', '');
 
+    $change['main']['retries_timeout'] = 0;
+    $change['main']['retries'] = 0;
+    $change['disable']['saving'] = 1;
 
     $config = $container->get('Config');
+    $config->setConfigs($change);
     $driver = $config->getDriver();
     $device = $driver->searchDevice($opt);
     $starter = $container->make('Starter');
