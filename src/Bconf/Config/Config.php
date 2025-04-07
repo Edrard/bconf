@@ -17,7 +17,7 @@ class Config
     protected $dev_conf = ['pre_command' => [''],'after_command' => [''],'command_end' => "\n","exec_type" => "write","enablePTY" => TRUE,"timeout" => 15,"command_end" => "", "config_filtets" => []];
     protected $dev_conf_telnet = ['telnet_user_prompt' => 'login:','telnet_pass_prompt' => 'password:','telnet_prompt_reg' => '\$','telnet_command_end' => "\r\n"];
 
-    function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder,array $main){
+    function __construct(IntDbDriver $driver,array $config, array $save,$groups, array $disable,$log_folder,array $main, bool $override = TRUE){
 
         $this->driver = $driver;
         MyLog::info("[".get_class($this)."] Db driver was setted",[]);
@@ -28,7 +28,9 @@ class Config
         $this->config['save'] = $save;
         $this->config['disable'] = $disable;
         $this->config['main'] = $main;
-        $this->overrideConfig($this->driver->getConfig());
+        if($override !== FALSE){
+            $this->overrideConfig($this->driver->getConfig());
+        }
         $this->retriesCheck();
         MyLog::info("[".get_class($this)."] Save config",$this->config['save']);
         if($this->config['disable']['dumping'] == 1){
@@ -55,9 +57,13 @@ class Config
     public function changeConfig(array $config){
         $this->config = $config;
     }
-    private function overrideConfig($get){
+    public function setConfigs(array $config){
+        $this->config = array_replace_recursive($this->config,$config);
+    }
+    private function overrideConfig(array $get){
 
         foreach($get as $key => $value){
+            MyLog::info("[".get_class($this)."] Override ".$key,[]);
             $this->config[$key] = $value;
         }
     }
