@@ -18,7 +18,7 @@ composer self-update --2
 yes | composer update --no-dev
 export COMPOSER_ALLOW_SUPERUSER=0
 
-if [ ! -f phoenix.php ]; then
+if [ -f phoenix.php ]; then
     php vendor/bin/phoenix migrate
 fi
 

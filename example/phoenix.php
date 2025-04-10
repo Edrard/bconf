@@ -2,7 +2,7 @@
 
 return [
     'migration_dirs' => [
-        'first' => __DIR__ . '/../migrations',
+        'first' => __DIR__ . '/migrations',
     ],
     'environments' => [
         'local' => [
