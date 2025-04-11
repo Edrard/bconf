@@ -21,8 +21,13 @@ function copyDir($src, $dst) {
                 continue;
             }
 
-            copy($srcPath, $dstPath);
-            echo "Copied: $srcPath -> $dstPath\n";
+            if (copy($srcPath, $dstPath)) {
+                // Встановлюємо оригінальний timestamp
+                touch($dstPath, filemtime($srcPath));
+                echo "Copied: $srcPath -> $dstPath\n";
+            } else {
+                echo "Failed to copy: $srcPath\n";
+            }
         }
     }
 
