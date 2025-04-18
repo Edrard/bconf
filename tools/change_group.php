@@ -62,13 +62,13 @@ foreach ($folders as $folder) {
     $fullPath = $baseDir . '/' . $folder;
 
     if (is_dir($fullPath)) {
-        $mikrotikPath = $fullPath . '/'.$argv[2];
-        $mikrotikKeysPath = $fullPath . '/'.$argv[3];
+        $old_path = $fullPath . '/'.$argv[2];
+        $new_path = $fullPath . '/'.$argv[3];
 
-        if (is_dir($mikrotikPath) && is_dir($mikrotikKeysPath)) {
-            copyDir($mikrotikPath, $mikrotikKeysPath);
-            deleteDir($mikrotikPath);
-            echo "Copied from $mikrotikPath to $mikrotikKeysPath\n";
+        if (is_dir($old_path) && is_dir($new_path)) {
+            copyDir($old_path, $new_path);
+            deleteDir($old_path);
+            echo "Copied from $old_path to $new_path\n";
         }
     }
 }
