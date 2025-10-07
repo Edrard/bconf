@@ -6,7 +6,7 @@ return [
     "after_command" => [""],
     "exec_type" => "exec",
     "enablePTY" => TRUE,
-    "timeout" => 15,
+    "timeout" => 300,
     "command_end" => "",
     "config_filtets" => [],
 ];
