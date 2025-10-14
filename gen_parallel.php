@@ -26,7 +26,7 @@ try{
         }
     }
 }Catch (\Exception $e) {
-    MyLog::critical($e->getMessage(),[]);
+    MyLog::critical('[Finish]'.$e->getMessage(),[]);
     die($e->getMessage());
 }
 MyLog::info("Ended in - ".Timer::getTime(),[]);
