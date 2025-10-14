@@ -7,6 +7,7 @@ use edrard\Bconf\Connector\Connector;
 use edrard\Bconf\Config\Config;
 use edrard\Exc\NoDeviceConfigException;
 use edrard\Exc\WrongDeviceConfig;
+use edrard\Exc\ConnectionProblems;
 use edrard\Bconf\Config\DeviceConfigChecker;
 
 
@@ -75,12 +76,16 @@ class Starter
                 if(!isset($device_config[$dev['model']])){
                     throw new NoDeviceConfigException("Cant find device config for ".$dev['model'],'error');
                 }
+                try{
                 $connect = new $con_class($dev,$device_config[$dev['model']]);
-                $this->connector->setDriver($connect);
-                if($this->connector->start() === FALSE){
-                    $this->retries[$dev['name']] = $dev;
+                    $this->connector->setDriver($connect);
+                    if($this->connector->start() === FALSE){
+                        $this->retries[$dev['name']] = $dev;
+                    }
+                }Catch ( \Exception $e) {
+                    throw new ConnectionProblems($e->getMessage().'. '.$dev['name'],'critical');
                 }
-            }Catch (WrongDeviceConfig | NoDeviceConfigException $e) {
+            }Catch (WrongDeviceConfig | NoDeviceConfigException | ConnectionProblems $e) {
                 MyLog::info("[".get_class($this)."] Skiping device: ".$dev['name'],[]);
             }
         }
