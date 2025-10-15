@@ -77,13 +77,13 @@ class Starter
                     throw new NoDeviceConfigException("Cant find device config for ".$dev['model'],'error');
                 }
                 try{
-                $connect = new $con_class($dev,$device_config[$dev['model']]);
-                    $this->connector->setDriver($connect);
-                    if($this->connector->start() === FALSE){
-                        $this->retries[$dev['name']] = $dev;
-                    }
+                    $connect = new $con_class($dev,$device_config[$dev['model']]);
                 }Catch ( \Exception $e) {
                     throw new ConnectionProblems($e->getMessage().'. '.$dev['name'],'critical');
+                }
+                $this->connector->setDriver($connect);
+                if($this->connector->start() === FALSE){
+                    $this->retries[$dev['name']] = $dev;
                 }
             }Catch (WrongDeviceConfig | NoDeviceConfigException | ConnectionProblems $e) {
                 MyLog::info("[".get_class($this)."] Skiping device: ".$dev['name'],[]);
